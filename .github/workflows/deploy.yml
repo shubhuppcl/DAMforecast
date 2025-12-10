@@ -1,0 +1,41 @@
+name: Deploy DAM Dashboard
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**.xlsx"  # Trigger when Excel files change
+      - "generate_index.py"
+      - "data_loader.py"
+      - ".github/workflows/deploy.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install pandas numpy xgboost plotly openpyxl
+
+      - name: Generate Dashboard
+        run: |
+          # Run the generator script
+          python generate_index.py
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public

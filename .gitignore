@@ -1,0 +1,14 @@
+# Ignore large model files
+*.joblib
+*.pkl
+*.h5
+*.model
+
+# Ignore python cache
+__pycache__/
+*.pyc
+
+# Ignore environment/logs
+.env
+*.log
+loader_run*.txt
