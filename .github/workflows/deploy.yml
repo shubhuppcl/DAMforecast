@@ -27,12 +27,18 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pandas numpy xgboost plotly openpyxl
+          pip install pandas numpy xgboost plotly openpyxl scikit-learn
+
+      - name: Debug File System
+        run: |
+          echo "Current Directory: $(pwd)"
+          ls -R
 
       - name: Generate Dashboard
         run: |
           # Run the generator script
           python generate_index.py
+
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

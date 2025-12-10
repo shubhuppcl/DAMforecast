@@ -22,9 +22,22 @@ def generate_static_dashboard():
         if os.path.exists("d:/shubham/dam for/"):
             data_dir = "d:/shubham/dam for/"
             
-        print(f"Loading data from {data_dir}...")
+        print(f"Loading data from {os.path.abspath(data_dir)}...")
+        # Check files
+        import glob
+        files = glob.glob(os.path.join(data_dir, "DAM_Market Snapshot*.xlsx"))
+        print(f"Files found: {len(files)}")
+        if files:
+            print(f"Sample file: {files[0]}")
+        else:
+            print("NO EXCEL FILES FOUND!")
+            # Print current directory contents
+            print("Listing current dir:")
+            print(os.listdir(data_dir))
+            
         df = load_and_preprocess_data(data_dir)
         print(f"Data Loaded. Shape: {df.shape}")
+
     except Exception as e:
         print(f"Error loading data: {e}")
         sys.exit(1)
